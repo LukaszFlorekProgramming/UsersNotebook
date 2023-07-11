@@ -10,21 +10,4 @@
     @await Html.PartialAsync("_UsersTable", Model.Users)
 </div>
 
-@*@if (Model.Users != null && Model.Users.Any())
-{
-    @await Html.PartialAsync("_UsersTable.cshtml", Model.Users)
-}
-else
-{
-    <p>Brak danych użytkowników.</p>
-}*@
-
-@*<div>
-    @Html.Partial("_UsersTable.cshtml", Model.Users)
-    @await Html.PartialAsync("_UsersTable.cshtml", Model.Users)
-</div>*@
-
-@*<div>
-    @await Html.PartialAsync("_UsersTable.cshtml", Model.Users)
-</div>*@
 

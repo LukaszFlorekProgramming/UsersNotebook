@@ -22,11 +22,15 @@
                                 @user.Name
                             </a>
                         </td>
-                        <td>@user.Surname</td>
+                        <td>
+                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link">
+                                @user.Surname
+                            </a>
+                        </td>
                         <td>@user.DateOfBirth.ToString("dd-MM-yyyy")</td>
                         <td>@user.Gender</td>
                         <td>
-                           dodaj urzytkownika
+                            <a href="@Url.Action("User", "User", new { id = 0 })" class="btn btn-primary">Dodaj</a>
                         </td>
                     </tr>
                 }
