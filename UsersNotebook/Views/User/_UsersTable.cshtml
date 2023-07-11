@@ -1,0 +1,42 @@
+﻿@model IEnumerable<UsersNotebook.Core.Models.Domains.User>
+
+    <div id="usersTable">
+    <table class="table mt-3 table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Imię</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col">Data urodzenia</th>
+                <th scope="col">Płeć</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach(var user in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link">
+                                @user.Name
+                            </a>
+                        </td>
+                        <td>@user.Surname</td>
+                        <td>@user.DateOfBirth.ToString("dd-MM-yyyy")</td>
+                        <td>@user.Gender</td>
+                        <td>
+                           dodaj urzytkownika
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="text-center">
+                    <td colspan="5">Brak urzytkowników do wyświetlenia</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
