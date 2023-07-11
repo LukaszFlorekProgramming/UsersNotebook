@@ -2,9 +2,6 @@
 @{
     ViewData["Title"] = "Users";
 }
-
-<h1>Users</h1>
-
 <div>
     <h2>Lista użytkowników</h2>
     @await Html.PartialAsync("_UsersTable", Model.Users)

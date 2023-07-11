@@ -37,6 +37,7 @@
         @Html.LabelFor(x => x.User.Gender)
         @Html.DropDownListFor(x => x.User.Gender, new List<SelectListItem>
         {
+            new SelectListItem { Text = "Wybierz płeć", Value = "" },
             new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" },
             new SelectListItem { Text = "Kobieta", Value = "Kobieta" }
         }, new { @class = "form-control", autofocus = "autofocus" })
