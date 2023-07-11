@@ -35,7 +35,11 @@
 
     <div class="form-group">
         @Html.LabelFor(x => x.User.Gender)
-        @Html.TextBoxFor(x => x.User.Gender, new { @class="form-control", autofocus = "autofocus"})
+        @Html.DropDownListFor(x => x.User.Gender, new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Mężczyzna", Value = "Mężczyzna" },
+            new SelectListItem { Text = "Kobieta", Value = "Kobieta" }
+        }, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(x => x.User.Gender)
     </div>
 
@@ -43,12 +47,18 @@
 
 }
 @section scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
     <script type="text/javascript">
     $(document).ready(function ()
     {
             $('#DateOfBirth').datepicker(
             {
+                maxDate: "0",
                 format: "dd-mm-yyyy",
+                altFormat: "dd-mm-yy",
+                altField: "#DateOfBirth",
                 language: "pl",
                 multidate: false,
                 autoclose: true,

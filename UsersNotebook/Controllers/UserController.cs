@@ -22,7 +22,7 @@ namespace UsersNotebook.Controllers
 
             var vm = new UsersViewModel
             {
-                Users = users,//_userRepository.GetAll(),
+                Users = users,
                 AdditionalInformations = additionalInformations
             };
             return View(vm);
@@ -39,7 +39,7 @@ namespace UsersNotebook.Controllers
         public IActionResult User(int id = 0)
         {
             var user = id == 0 ?
-                new User { Id = 0, Name = "imie", Surname = "nazwisko", DateOfBirth = DateTime.Today, Gender="Nie chce podawac"} : 
+                new User { Id = 0, Name = string.Empty, Surname = string.Empty, DateOfBirth = DateTime.Today, Gender=string.Empty } : 
                 _userRepository.Get(id);
 
             var vm = new UserViewModel
@@ -47,10 +47,7 @@ namespace UsersNotebook.Controllers
                 User = user,
                 Heading = id == 0 ?
                 "Dodawanie nowego urzytkownika" : "Edytowanie urzytkownika",
-
-
             };
-
             return View(vm);
         }
 
@@ -58,7 +55,7 @@ namespace UsersNotebook.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult User(User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var vm = new UserViewModel
                 {

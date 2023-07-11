@@ -17,6 +17,6 @@ namespace UsersNotebook.Core.Models.Domains
         public DateTime DateOfBirth { get; set; }
         [Required(ErrorMessage = "Pole Płeć Urodzenia jest wymagane.")]
         public string Gender { get; set; }
-        public ICollection<AdditionalInformation> AdditionalInformations { get; set; }
+        public ICollection<AdditionalInformation>? AdditionalInformations { get; set; }
     }
 }
