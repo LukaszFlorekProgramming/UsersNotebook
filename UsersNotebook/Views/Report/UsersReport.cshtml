@@ -1,0 +1,48 @@
+﻿@model UsersReportViewModel
+@{
+    ViewData["Title"] = "UsersReport";
+}
+
+<h1>Filtrowanie urzytkowniów do raportu</h1>
+
+<form id="filterForm" class="row gy-2 gx-3 align-items-center">
+    <div class="col-auto">
+        @Html.TextBoxFor(x => x.FilterUsers.Name,
+        new { @class = "form-control mb-2", placeholder="Imię"})
+    </div>
+    <div class="col-auto">
+        @Html.TextBoxFor(x => x.FilterUsers.Surname,
+        new { @class = "form-control mb-2", placeholder="Nazwisko"})
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Szukaj</button>
+    </div>
+</form>
+
+<div>
+    @await Html.PartialAsync("_UsersReportTable", Model.Users)
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#filterForm').submit(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UsersReport","Report")",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#usersReportTable').html(data);
+                    },
+                    error: function (data) {
+                        alert(data.message)
+                    },
+                    dataType: "html"
+                });
+                return false;
+            });
+        });
+
+    </script>
+}
