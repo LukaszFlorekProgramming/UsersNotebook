@@ -2,6 +2,7 @@
 using UsersNotebook.Persistence.Repositories;
 using UsersNotebook.Persistence;
 using UsersNotebook.Core.ViewModels;
+using System.Text;
 
 namespace UsersNotebook.Controllers
 {
@@ -33,5 +34,45 @@ namespace UsersNotebook.Controllers
 
             return PartialView("_UsersReportTable", users);
         }
+        [HttpGet]
+        public IActionResult DownloadCsv(UsersReportViewModel viewModel)
+        {
+            var users = _userRepository.GetAll();
+            /*var users = _userRepository.Get(viewModel.FilterUsers.Name,
+                viewModel.FilterUsers.Surname);*/
+
+            var csvData = new StringBuilder();
+            csvData.AppendLine("Imie,Nazwisko,Data urodzenia, Płeć");
+
+            foreach (var user in users)
+            {
+                csvData.AppendLine($"{user.Name}, {user.Surname}, {user.DateOfBirth}, {user.Gender}");
+            }
+
+            var csvBytes = Encoding.UTF8.GetBytes(csvData.ToString());
+            var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
+
+            return File(csvBytes, "text/csv", fileName);
+        }
+
+        /*public IActionResult DownloadCsv(UsersReportViewModel viewModel)
+        {
+            var users = _userRepository.GetAll();
+                viewModel.FilterUsers.Surname);
+
+            var csvData = new StringBuilder();
+            csvData.AppendLine("Imię,Nazwisko");
+
+            foreach (var user in users)
+            {
+                csvData.AppendLine($"{user.Name},{user.Surname}");
+            }
+
+            var csvBytes = Encoding.UTF8.GetBytes(csvData.ToString());
+            var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
+
+            return File(csvBytes, "text/csv", fileName);
+        }*/
+
     }
 }

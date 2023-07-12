@@ -19,6 +19,12 @@
     </div>
 </form>
 
+@*<button id="downloadCsvButton" class="btn btn-primary">Pobierz raport CSV</button>*@
+
+<button id="generateButton" class="btn btn-secondary mb-3" onclick="generateCSV()">
+    Gereruj raport CSV
+</button>
+
 <div>
     @await Html.PartialAsync("_UsersReportTable", Model.Users)
 </div>
@@ -44,5 +50,26 @@
             });
         });
 
+        function generateCSV()
+        {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DownloadCsv","Report")",
+                data: $(this).serialize(),
+                success: function (data) {
+                    window.location.href = "@Url.Action("DownloadCsv", "Report")";
+                },
+                error: function (data) {
+                    alert(data.message)
+                },
+                dataType: "html"
+            });
+        }
+
+
     </script>
 }
+
+@*$('#downloadCsvButton').click(function () {
+window.location.href = "@Url.Action("DownloadCsv", "Report")";
+});*@

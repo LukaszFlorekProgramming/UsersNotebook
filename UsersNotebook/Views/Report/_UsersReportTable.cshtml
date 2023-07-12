@@ -1,4 +1,6 @@
-﻿@using UsersNotebook.Core.Models.Domains;
+﻿@using System.Text;
+@using UsersNotebook.Core.Models.Domains;
+@using Microsoft.AspNetCore.Mvc
 @model IEnumerable<User>
 
 <div id="usersReportTable">
@@ -34,3 +36,11 @@
         </tbody>
     </table>
 </div>
+
+@*@{
+    var downloadUrl = Url.Action("DownloadCsv", "Report");
+}
+
+<script>
+    window.location.href = "@downloadUrl";
+</script>*@
