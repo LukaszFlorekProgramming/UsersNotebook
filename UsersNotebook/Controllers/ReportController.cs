@@ -43,13 +43,15 @@ namespace UsersNotebook.Controllers
                 viewModel.FilterUsers.Surname);*/
 
             var csvData = new StringBuilder();
-            csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Płeć");
+            csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");
             string title;
-
+            DateTime today = DateTime.Today;
+            int age;//= today.Year - dateOfBirth.Year;
             foreach (var user in users)
             {
+                age = today.Year - user.DateOfBirth.Year;
                 title = user.Gender == "Mężczyzna" ? "Pan" : "Pani";
-                csvData.AppendLine($"{title};{user.Name};{user.Surname};{user.DateOfBirth};{user.Gender}");
+                csvData.AppendLine($"{title};{user.Name};{user.Surname};{user.DateOfBirth};{age};{user.Gender}");
             }
 
             var csvBytes = Encoding.GetEncoding("iso-8859-2").GetBytes(csvData.ToString());
