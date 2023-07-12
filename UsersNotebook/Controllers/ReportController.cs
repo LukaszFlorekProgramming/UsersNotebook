@@ -3,6 +3,7 @@ using UsersNotebook.Persistence.Repositories;
 using UsersNotebook.Persistence;
 using UsersNotebook.Core.ViewModels;
 using System.Text;
+using UsersNotebook.Core.Models.Domains;
 
 namespace UsersNotebook.Controllers
 {
@@ -42,14 +43,16 @@ namespace UsersNotebook.Controllers
                 viewModel.FilterUsers.Surname);*/
 
             var csvData = new StringBuilder();
-            csvData.AppendLine("Imie;Nazwisko;Data urodzenia;Płeć");
+            csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Płeć");
+            string title;
 
             foreach (var user in users)
             {
-                csvData.AppendLine($"{user.Name};{user.Surname};{user.DateOfBirth};{user.Gender}");
+                title = user.Gender == "Mężczyzna" ? "Pan" : "Pani";
+                csvData.AppendLine($"{title};{user.Name};{user.Surname};{user.DateOfBirth};{user.Gender}");
             }
 
-            var csvBytes = Encoding.UTF8.GetBytes(csvData.ToString());
+            var csvBytes = Encoding.GetEncoding("iso-8859-2").GetBytes(csvData.ToString());
             var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
 
             return File(csvBytes, "text/csv", fileName);
