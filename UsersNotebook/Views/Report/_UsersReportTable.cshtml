@@ -4,7 +4,7 @@
 @model IEnumerable<User>
 
 <div id="usersReportTable">
-    <table class="table mt-3 table-bordered">
+    <table class="table mt-3 table-bordered text-center">
         <thead class="table-dark">
             <tr>
                 <th scope="col">Imię</th>
@@ -35,11 +35,3 @@
         </tbody>
     </table>
 </div>
-
-@*@{
-    var downloadUrl = Url.Action("DownloadCsv", "Report");
-}
-
-<script>
-    window.location.href = "@downloadUrl";
-</script>*@

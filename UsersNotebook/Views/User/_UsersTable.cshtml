@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<UsersNotebook.Core.Models.Domains.User>
 
     <div id="usersTable">
-    <table class="table mt-3 table-bordered">
+    <table class="table mt-3 table-bordered text-center">
         <thead class="table-dark">
             <tr>
                 <th scope="col">Imię</th>
@@ -18,12 +18,12 @@
                 {
                     <tr>
                         <td>
-                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link">
+                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link disabled-link">
                                 @user.Name
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link">
+                            <a href="@Url.Action("User","User", new { id = user.Id})" class="font-weight-bold custom-link disabled-link">
                                 @user.Surname
                             </a>
                         </td>
@@ -44,3 +44,10 @@
         </tbody>
     </table>
     </div>
+
+<style>
+    .disabled-link {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+</style>

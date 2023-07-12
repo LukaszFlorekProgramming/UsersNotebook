@@ -14,26 +14,17 @@
         @Html.TextBoxFor(x => x.FilterUsers.Surname,
         new { @class = "form-control mb-2", placeholder="Nazwisko"})
     </div>
-    @*<div class="col-auto">
-        @Html.DropDownListFor(x => x.FilterUsers.Gender, new SelectList(new[]
-        {
-        new SelectListItem { Value = "Mężczyzna", Text = "Mężczyzna" },
-        new SelectListItem { Value = "Kobieta", Text = "Kobieta" }
-        }, "Value", "Text"), new { @class = "form-control mb-2" })
-    </div>*@
     <div class="col-auto">
         <select class="form-control mb-2" name="FilterUsers.Gender">
             <option value="">Wybierz płeć</option>
-            <option value="M">Mężczyzna</option>
-            <option value="K">Kobieta</option>
+            <option value="Mężczyzna">Mężczyzna</option>
+            <option value="Kobieta">Kobieta</option>
         </select>
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-primary">Szukaj</button>
     </div>
 </form>
-
-@*<button id="downloadCsvButton" class="btn btn-primary">Pobierz raport CSV</button>*@
 
 <button id="generateButton" class="btn btn-secondary mb-3" onclick="generateCSV()">
     Gereruj raport CSV
@@ -44,7 +35,7 @@
 </div>
 
 @section Scripts
-    {
+{
     <script type="text/javascript">
         $(document).ready(function () {
             $('#filterForm').submit(function () {
@@ -79,11 +70,5 @@
                 dataType: "html"
             });
         }
-
-
     </script>
 }
-
-@*$('#downloadCsvButton').click(function () {
-window.location.href = "@Url.Action("DownloadCsv", "Report")";
-});*@
