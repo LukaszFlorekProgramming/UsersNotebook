@@ -14,6 +14,20 @@
         @Html.TextBoxFor(x => x.FilterUsers.Surname,
         new { @class = "form-control mb-2", placeholder="Nazwisko"})
     </div>
+    @*<div class="col-auto">
+        @Html.DropDownListFor(x => x.FilterUsers.Gender, new SelectList(new[]
+        {
+        new SelectListItem { Value = "Mężczyzna", Text = "Mężczyzna" },
+        new SelectListItem { Value = "Kobieta", Text = "Kobieta" }
+        }, "Value", "Text"), new { @class = "form-control mb-2" })
+    </div>*@
+    <div class="col-auto">
+        <select class="form-control mb-2" name="FilterUsers.Gender">
+            <option value="">Wybierz płeć</option>
+            <option value="M">Mężczyzna</option>
+            <option value="K">Kobieta</option>
+        </select>
+    </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-primary">Szukaj</button>
     </div>

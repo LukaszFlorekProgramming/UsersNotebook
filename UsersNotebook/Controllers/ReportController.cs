@@ -31,7 +31,7 @@ namespace UsersNotebook.Controllers
         public IActionResult UsersReport(UsersReportViewModel viewModel)
         {
             var users = _userRepository.Get(viewModel.FilterUsers.Name,
-                viewModel.FilterUsers.Surname);
+                viewModel.FilterUsers.Surname,viewModel.FilterUsers.Gender);
 
             return PartialView("_UsersReportTable", users);
         }

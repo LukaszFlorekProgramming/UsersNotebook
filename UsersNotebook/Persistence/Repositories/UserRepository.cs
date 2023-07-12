@@ -45,7 +45,7 @@ namespace UsersNotebook.Persistence.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> Get(string name = null, string surname = null)
+        public IEnumerable<User> Get(string name = null, string surname = null, string gender = null)
         {
             var users = _context.Users.AsEnumerable(); ;
 
@@ -57,6 +57,10 @@ namespace UsersNotebook.Persistence.Repositories
             if (!string.IsNullOrWhiteSpace(surname))
             {
                 users = users.Where(x => x.Surname.Contains(surname));
+            }
+            if (!string.IsNullOrWhiteSpace(gender))
+            {
+                users = users.Where(x => x.Gender.Contains(gender));
             }
 
             return users.ToList();
