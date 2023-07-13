@@ -7,15 +7,17 @@
 
 <form id="filterForm" class="row gy-2 gx-3 align-items-center">
     <div class="col-auto">
-        @Html.TextBoxFor(x => x.FilterUsers.Name,
-        new { @class = "form-control mb-2", placeholder="Imię"})
+        <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Imię" name="Name">
+        </div>
     </div>
     <div class="col-auto">
-        @Html.TextBoxFor(x => x.FilterUsers.Surname,
-        new { @class = "form-control mb-2", placeholder="Nazwisko"})
+        <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Nazwisko" name="Surname">
+        </div>
     </div>
     <div class="col-auto">
-        <select class="form-control mb-2" name="FilterUsers.Gender">
+        <select class="form-control mb-2" name="Gender">
             <option value="">Wybierz płeć</option>
             <option value="Mężczyzna">Mężczyzna</option>
             <option value="Kobieta">Kobieta</option>
@@ -26,7 +28,7 @@
     </div>
 </form>
 
-<button id="generateButton" class="btn btn-secondary mb-3" onclick="generateCSV()">
+<button class="btn btn-secondary mb-3" onclick="generateCSVWithoutFilter()">
     Gereruj raport CSV
 </button>
 
@@ -55,8 +57,7 @@
             });
         });
 
-        function generateCSV()
-        {
+        function generateCSVWithoutFilter() {
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("DownloadCsv","Report")",

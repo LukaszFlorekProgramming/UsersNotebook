@@ -4,6 +4,7 @@ using UsersNotebook.Persistence;
 using UsersNotebook.Core.ViewModels;
 using System.Text;
 using UsersNotebook.Core.Models.Domains;
+using UsersNotebook.Core.Models;
 
 namespace UsersNotebook.Controllers
 {
@@ -28,10 +29,10 @@ namespace UsersNotebook.Controllers
         }
 
         [HttpPost]
-        public IActionResult UsersReport(UsersReportViewModel viewModel)
+        public IActionResult UsersReport(FilterUsers viewModel)
         {
-            var users = _userRepository.Get(viewModel.FilterUsers.Name,
-                viewModel.FilterUsers.Surname,viewModel.FilterUsers.Gender);
+            var users = _userRepository.Get(viewModel.Name,
+                viewModel.Surname,viewModel.Gender);
 
             return PartialView("_UsersReportTable", users);
         }

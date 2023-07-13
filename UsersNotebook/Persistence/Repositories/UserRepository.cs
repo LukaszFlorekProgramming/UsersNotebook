@@ -45,7 +45,7 @@ namespace UsersNotebook.Persistence.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> Get(string name = null, string surname = null, string gender = null)
+        public IEnumerable<User> Get(string name, string surname, string gender)
         {
             var users = _context.Users.AsEnumerable(); ;
 
