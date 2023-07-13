@@ -32,6 +32,10 @@
     Gereruj raport CSV
 </button>
 
+<button class="btn btn-secondary mb-3" onclick="generateCSVWithFilter()">
+    Gereruj raport CSV z filtrem
+</button>
+
 <div>
     @await Html.PartialAsync("_UsersReportTable", Model.Users)
 </div>
@@ -71,5 +75,35 @@
                 dataType: "html"
             });
         }
+
+        function generateCSVWithFilter() {
+            // Pobierz wartości z pól formularza
+            var name = $('#filterName').val();
+            var surname = $('#filterSurname').val();
+            var gender = $('#filterGender').val();
+
+            // Utwórz obiekt z danymi do przesłania
+            var data = {
+                Name: name,
+                Surname: surname,
+                Gender: gender
+            };
+
+            // Wykonaj żądanie AJAX
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DownloadCsvPost", "Report")',
+                data: data,
+                success: function (response) {
+                    // Przekieruj na stronę pobierania pliku
+                    window.location.href = "@Url.Action("DownloadCsvPost", "Report")";
+                },
+                error: function (xhr, status, error) {
+                    // Obsłuż błąd
+                    alert('Wystąpił błąd: ' + error);
+                }
+            });
+        }
+
     </script>
 }
