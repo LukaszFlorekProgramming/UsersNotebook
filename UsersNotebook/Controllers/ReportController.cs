@@ -37,11 +37,14 @@ namespace UsersNotebook.Controllers
             return PartialView("_UsersReportTable", users);
         }
         [HttpGet]
-        public IActionResult DownloadCsv(FilterUsers viewModel)
+        public IActionResult DownloadCsv(string name, string surname, string gender)
         {
-            var users = _userRepository.GetAll();
-            /*var users = _userRepository.Get(viewModel.Name,
-                viewModel.Surname, viewModel.Gender);*/
+            Console.WriteLine($"{name},{surname},{gender}");
+            //var users = _userRepository.GetAll();
+            var users = _userRepository.Get(name,
+                surname, gender);
+            /*var users = _userRepository.Get(viewModel.Name="Łukasz",
+                viewModel.Surname="Florek", viewModel.Gender="Mężczyzna");*/
 
             var csvData = new StringBuilder();
             csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");
@@ -66,8 +69,8 @@ namespace UsersNotebook.Controllers
         {
             Console.WriteLine($"{viewModel.Name},{viewModel.Surname},{viewModel.Gender}");
             var users = _userRepository.GetAll();
-            /*var users = _userRepository.Get(viewModel.Name,
-                viewModel.Surname, viewModel.Gender);*/
+            /*var users = _userRepository.Get(viewModel.Name="Łukasz",
+                viewModel.Surname="Florek", viewModel.Gender="Mężczyzna");*/
 
             var csvData = new StringBuilder();
             csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");

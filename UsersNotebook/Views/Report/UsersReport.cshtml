@@ -78,9 +78,9 @@
 
         function generateCSVWithFilter() {
             // Pobierz wartości z pól formularza
-            var name = $('#filterName').val();
-            var surname = $('#filterSurname').val();
-            var gender = $('#filterGender').val();
+            var name = $('input[name="Name"]').val();
+            var surname = $('input[surname="Surname"]').val();
+            var gender = $('input[gender="Gender"]').val();
 
             // Utwórz obiekt z danymi do przesłania
             var data = {
@@ -95,8 +95,12 @@
                 url: '@Url.Action("DownloadCsvPost", "Report")',
                 data: data,
                 success: function (response) {
-                    // Przekieruj na stronę pobierania pliku
-                    window.location.href = "@Url.Action("DownloadCsvPost", "Report")";
+                    // Przekieruj na stronę pobierania pliku z parametrami
+                    var downloadUrl = "@Url.Action("DownloadCsv", "Report")" +
+                        "?name=" + encodeURIComponent(name) +
+                        "&surname=" + encodeURIComponent(surname) +
+                        "&gender=" + encodeURIComponent(gender);
+                    window.location.href = downloadUrl;
                 },
                 error: function (xhr, status, error) {
                     // Obsłuż błąd
