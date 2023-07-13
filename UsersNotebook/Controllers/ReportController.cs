@@ -39,75 +39,23 @@ namespace UsersNotebook.Controllers
         [HttpGet]
         public IActionResult DownloadCsv(string name, string surname, string gender)
         {
-            Console.WriteLine($"{name},{surname},{gender}");
-            //var users = _userRepository.GetAll();
             var users = _userRepository.Get(name,
                 surname, gender);
-            /*var users = _userRepository.Get(viewModel.Name="Łukasz",
-                viewModel.Surname="Florek", viewModel.Gender="Mężczyzna");*/
-
             var csvData = new StringBuilder();
             csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");
             string title;
             DateTime today = DateTime.Today;
-            int age;//= today.Year - dateOfBirth.Year;
+            int age;
             foreach (var user in users)
             {
                 age = today.Year - user.DateOfBirth.Year;
                 title = user.Gender == "Mężczyzna" ? "Pan" : "Pani";
                 csvData.AppendLine($"{title};{user.Name};{user.Surname};{user.DateOfBirth};{age};{user.Gender}");
             }
-
             var csvBytes = Encoding.GetEncoding("iso-8859-2").GetBytes(csvData.ToString());
             var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
-
             return File(csvBytes, "text/csv", fileName);
         }
-
-        [HttpPost]
-        public IActionResult DownloadCsvPost(FilterUsers viewModel)
-        {
-            Console.WriteLine($"{viewModel.Name},{viewModel.Surname},{viewModel.Gender}");
-            var users = _userRepository.GetAll();
-            /*var users = _userRepository.Get(viewModel.Name="Łukasz",
-                viewModel.Surname="Florek", viewModel.Gender="Mężczyzna");*/
-
-            var csvData = new StringBuilder();
-            csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");
-            string title;
-            DateTime today = DateTime.Today;
-            int age;//= today.Year - dateOfBirth.Year;
-            foreach (var user in users)
-            {
-                age = today.Year - user.DateOfBirth.Year;
-                title = user.Gender == "Mężczyzna" ? "Pan" : "Pani";
-                csvData.AppendLine($"{title};{user.Name};{user.Surname};{user.DateOfBirth};{age};{user.Gender}");
-            }
-
-            var csvBytes = Encoding.GetEncoding("iso-8859-2").GetBytes(csvData.ToString());
-            var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
-
-            return File(csvBytes, "text/csv", fileName);
-        }
-
-        /*public IActionResult DownloadCsv(UsersReportViewModel viewModel)
-        {
-            var users = _userRepository.GetAll();
-                viewModel.FilterUsers.Surname);
-
-            var csvData = new StringBuilder();
-            csvData.AppendLine("Imię,Nazwisko");
-
-            foreach (var user in users)
-            {
-                csvData.AppendLine($"{user.Name},{user.Surname}");
-            }
-
-            var csvBytes = Encoding.UTF8.GetBytes(csvData.ToString());
-            var fileName = $"{DateTime.Now:yyyyMMddHHmmss}.csv";
-
-            return File(csvBytes, "text/csv", fileName);
-        }*/
 
     }
 }

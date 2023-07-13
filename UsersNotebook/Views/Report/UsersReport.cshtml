@@ -28,12 +28,8 @@
     </div>
 </form>
 
-<button class="btn btn-secondary mb-3" onclick="generateCSVWithoutFilter()">
+<button class="btn btn-secondary mb-3" onclick="generateCSV()">
     Gereruj raport CSV
-</button>
-
-<button class="btn btn-secondary mb-3" onclick="generateCSVWithFilter()">
-    Gereruj raport CSV z filtrem
 </button>
 
 <div>
@@ -61,13 +57,28 @@
             });
         });
 
-        function generateCSVWithoutFilter() {
+        function generateCSV() {
+
+            var name = $('input[name="Name"]').val();
+            var surname = $('input[name="Surname"]').val();
+            var gender = $('select[name="Gender"]').val();
+
+            var data = {
+                Name: name,
+                Surname: surname,
+                Gender: gender
+            };
+
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("DownloadCsv","Report")",
-                data: $(this).serialize(),
+                data: data,
                 success: function (data) {
-                    window.location.href = "@Url.Action("DownloadCsv", "Report")";
+                    var downloadUrl = "@Url.Action("DownloadCsv", "Report")" +
+                        "?name=" + encodeURIComponent(name) +
+                        "&surname=" + encodeURIComponent(surname) +
+                        "&gender=" + encodeURIComponent(gender);
+                    window.location.href = downloadUrl;
                 },
                 error: function (data) {
                     alert(data.message)
@@ -75,39 +86,5 @@
                 dataType: "html"
             });
         }
-
-        function generateCSVWithFilter() {
-            // Pobierz wartości z pól formularza
-            var name = $('input[name="Name"]').val();
-            var surname = $('input[name="Surname"]').val();
-            var gender = $('select[name="Gender"]').val();
-
-            // Utwórz obiekt z danymi do przesłania
-            var data = {
-                Name: name,
-                Surname: surname,
-                Gender: gender
-            };
-
-            // Wykonaj żądanie AJAX
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("DownloadCsvPost", "Report")',
-                data: data,
-                success: function (response) {
-                    // Przekieruj na stronę pobierania pliku z parametrami
-                    var downloadUrl = "@Url.Action("DownloadCsv", "Report")" +
-                        "?name=" + encodeURIComponent(name) +
-                        "&surname=" + encodeURIComponent(surname) +
-                        "&gender=" + encodeURIComponent(gender);
-                    window.location.href = downloadUrl;
-                },
-                error: function (xhr, status, error) {
-                    // Obsłuż błąd
-                    alert('Wystąpił błąd: ' + error);
-                }
-            });
-        }
-
     </script>
 }
