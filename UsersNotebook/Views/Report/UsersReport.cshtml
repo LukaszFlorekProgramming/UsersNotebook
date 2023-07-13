@@ -79,8 +79,8 @@
         function generateCSVWithFilter() {
             // Pobierz wartości z pól formularza
             var name = $('input[name="Name"]').val();
-            var surname = $('input[surname="Surname"]').val();
-            var gender = $('input[gender="Gender"]').val();
+            var surname = $('input[name="Surname"]').val();
+            var gender = $('select[name="Gender"]').val();
 
             // Utwórz obiekt z danymi do przesłania
             var data = {
