@@ -6,5 +6,6 @@ namespace UsersNotebook.Core.ViewModels
     {
         public string Heading { get; set; }
         public User User { get; set; }
+        public AdditionalInformation AdditionalInformations { get; set; }
     }
 }

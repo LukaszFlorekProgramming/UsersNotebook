@@ -17,8 +17,8 @@ namespace UsersNotebook.Controllers
         }
         public IActionResult Users()
         {
-            var users = _userRepository.GetAll();
-            var additionalInformations = _userRepository.GetAdditionalInformation();
+            var users = _userRepository.GetAll().ToList(); ;
+            var additionalInformations = _userRepository.GetAdditionalInformation().ToList();
 
             var vm = new UsersViewModel
             {
@@ -72,6 +72,14 @@ namespace UsersNotebook.Controllers
 
             return RedirectToAction("Users");
         }
+
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddInformation([Bind("AdditionalInformations")] UsersViewModel viewModel)
+        {
+            viewModel.AdditionalInformations.Add(new AdditionalInformation());
+            return View("AdditionalInformations", viewModel);
+        }*/
 
     }
 }
