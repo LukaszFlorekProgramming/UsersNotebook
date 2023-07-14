@@ -1,20 +1,22 @@
-﻿@model IEnumerable<UsersNotebook.Core.Models.Domains.User>
+﻿@model UsersViewModel
 
     <div id="usersTable">
     <table class="table mt-3 table-bordered text-center">
         <thead class="table-dark">
             <tr>
-                <th scope="col">Imię</th>
-                <th scope="col">Nazwisko</th>
-                <th scope="col">Data urodzenia</th>
-                <th scope="col">Płeć</th>
+                <th scope="col">@Html.LabelFor(model => model.Users.FirstOrDefault().Name)</th>
+                <th scope="col">@Html.LabelFor(model => model.Users.FirstOrDefault().Surname)</th>
+                <th scope="col">@Html.LabelFor(model => model.Users.FirstOrDefault().DateOfBirth)</th>
+                <th scope="col">@Html.LabelFor(model => model.Users.FirstOrDefault().Gender)</th>
+                <th scope="col">@Html.LabelFor(model => model.AdditionalInformations.FirstOrDefault().InformationType)</th>
+                <th scope="col">@Html.LabelFor(model => model.AdditionalInformations.FirstOrDefault().InformationValue)</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Any())
+            @if (Model.Users != null && Model.Users.Any())
             {
-                foreach(var user in Model)
+                foreach(var user in Model.Users)
                 {
                     <tr>
                         <td>
@@ -29,10 +31,37 @@
                         </td>
                         <td>@user.DateOfBirth.ToString("dd-MM-yyyy")</td>
                         <td>@user.Gender</td>
+                        @if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any())
+                        {
+                            var userAdditionalInformations = Model.AdditionalInformations.Where(info => info.UserId == user.Id);
+                            if (userAdditionalInformations != null && userAdditionalInformations.Any())
+                            {
+                                foreach (var info in userAdditionalInformations)
+                                {
+                                    <td colspan="1">@info.InformationType</td>
+                                    <td colspan="1">@info.InformationValue</td>
+                                }
+                            }
+                            else
+                            {
+                                <td colspan="1"></td>
+                            }
+
+                        }
+
                         <td>
                             <a href="@Url.Action("User", "User", new { id = 0 })" class="btn btn-primary">Dodaj</a>
                         </td>
                     </tr>
+
+                    @*if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any())
+                    {
+                        var userAdditionalInformations = Model.AdditionalInformations.Where(info => info.UserId == user.Id);
+                        foreach (var info in userAdditionalInformations)
+                        {
+                                <td colspan="1">InformationType: @info.InformationType, InformationValue: @info.InformationValue</td>
+                        }
+                    }*@
                 }
             }
             else
