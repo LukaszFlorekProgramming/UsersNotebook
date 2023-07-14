@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using UsersNotebook.Core.Models;
 using UsersNotebook.Core.Models.Domains;
 
@@ -81,23 +83,22 @@ namespace UsersNotebook.Persistence.Repositories
 
         public IEnumerable<User> Get(FilterUsers filter)
         {
-            var users = _context.Users.AsEnumerable(); ;
+            var predicate = PredicateBuilder.New<User>(true);
 
-            if(!string.IsNullOrWhiteSpace(filter.Name))
-            {
-                users = users.Where(x => x.Name.Contains(filter.Name));
-            }
+            if (!string.IsNullOrEmpty(filter.Name))
+                predicate.And(x => x.Name == filter.Name);
 
-            if (!string.IsNullOrWhiteSpace(filter.Surname))
-            {
-                users = users.Where(x => x.Surname.Contains(filter.Surname));
-            }
-            if (!string.IsNullOrWhiteSpace(filter.Gender))
-            {
-                users = users.Where(x => x.Gender.Contains(filter.Gender));
-            }
+            if (!string.IsNullOrEmpty(filter.Surname))
+                predicate.And(x => x.Surname == filter.Surname);
 
-            return users.ToList();
+            if (!string.IsNullOrEmpty(filter.Gender))
+                predicate.And(x => x.Gender == filter.Gender);
+
+            var users = _context.Users
+                               .AsNoTracking()
+                               .Where(predicate)
+                               .AsEnumerable();
+            return users;
         }
     }
 }
