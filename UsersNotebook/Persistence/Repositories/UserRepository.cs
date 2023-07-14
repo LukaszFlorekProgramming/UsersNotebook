@@ -33,6 +33,12 @@ namespace UsersNotebook.Persistence.Repositories
             _context.SaveChanges();
         }
 
+        public void AddInformation(AdditionalInformation additionalInformation)
+        {
+            _context.AdditionalInformations.Add(additionalInformation);
+            _context.SaveChanges();
+        }
+
         public void Update(User user)
         {
             var userToUpdate = _context.Users.FirstOrDefault(x =>  x.Id == user.Id);

@@ -20,6 +20,11 @@ namespace UsersNotebook.Controllers
             var users = _userRepository.GetAll().ToList(); ;
             var additionalInformations = _userRepository.GetAdditionalInformation().ToList();
 
+            foreach (var user in users)
+            {
+                user.AdditionalInformations = new List<AdditionalInformation>(); // Inicjalizacja jako pusta lista dla każdego użytkownika
+            }
+
             var vm = new UsersViewModel
             {
                 Users = users,
@@ -53,6 +58,45 @@ namespace UsersNotebook.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult User(UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var vm = new UserViewModel
+                {
+                    User = model.User,
+                    Heading = model.User.Id == 0 ? "Dodawanie nowego urzytkownika" : "Edytowanie urzytkownika",
+                    AdditionalInformations = model.AdditionalInformations
+                };
+                return View("User", vm);
+            }
+            if (model.User.Id == 0)
+            {
+                //model.AdditionalInformations. = 22;
+                _userRepository.Add(model.User);
+                //_userRepository.AddInformation(model.AdditionalInformations);
+            }
+                
+            else
+                //model.AdditionalInformations.UserId = model.User.Id;
+                //_userRepository.AddInformation(model.AdditionalInformations);
+                _userRepository.Update(model.User);
+
+            if (model.AdditionalInformations != null)
+            {
+                foreach (var additionalInfo in model.AdditionalInformations)
+                {
+                    additionalInfo.UserId = model.User.Id;
+                    _userRepository.AddInformation(additionalInfo);
+                }
+            }
+
+
+            return RedirectToAction("Users");
+        }
+
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult User(User user)
         {
             if (!ModelState.IsValid)
@@ -71,6 +115,12 @@ namespace UsersNotebook.Controllers
                 _userRepository.Update(user);
 
             return RedirectToAction("Users");
+        }*/
+
+        public ActionResult AdditionalInformationEditor(int index)
+        {
+            var model = new AdditionalInformation();
+            return PartialView("_AdditionalInformationsEditor", model);
         }
 
         /*[HttpPost]

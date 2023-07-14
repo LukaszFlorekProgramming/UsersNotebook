@@ -1,0 +1,15 @@
+﻿@using UsersNotebook.Core.Models.Domains;
+@model AdditionalInformation
+
+<div class="form-group">
+    @Html.LabelFor(x => x.InformationType)
+    @Html.TextBoxFor(x => x.InformationType, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.InformationType)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.InformationValue)
+    @Html.TextBoxFor(x => x.InformationValue, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.InformationValue)
+</div>
+
