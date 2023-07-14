@@ -64,17 +64,6 @@ namespace UsersNotebook.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                                      .Select(e => e.ErrorMessage)
-                                      .ToList();
-
-                // Możesz wykorzystać listę błędów do dalszej analizy lub logowania
-                foreach (var error in errors)
-                {
-                    // Wyświetl błąd w konsoli lub zapisz go do logów
-                    Console.WriteLine(error);
-                }
-
                 var vm = new UserViewModel
                 {
                     User = model.User,
