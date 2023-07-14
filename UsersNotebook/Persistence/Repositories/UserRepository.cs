@@ -62,22 +62,21 @@ namespace UsersNotebook.Persistence.Repositories
 
         public void UpdateInformation(AdditionalInformation additionalInformation)
         {
-            
-            var additionalInformationToUpdate = _context.AdditionalInformations.FirstOrDefault(x => x.UserId == additionalInformation.UserId);
+            var additionalInformationToUpdate = _context.AdditionalInformations
+                .FirstOrDefault(x => x.UserId == additionalInformation.UserId);
 
-            if(additionalInformationToUpdate is null)
+            if (additionalInformationToUpdate is null)
             {
-                additionalInformationToUpdate = new AdditionalInformation();
-                additionalInformationToUpdate.InformationType = additionalInformation.InformationType;
-                additionalInformationToUpdate.InformationValue = additionalInformation.InformationValue;
-                additionalInformationToUpdate.UserId = additionalInformation.UserId;
+                additionalInformationToUpdate = new AdditionalInformation
+                {
+                    UserId = additionalInformation.UserId
+                };
                 _context.Add(additionalInformationToUpdate);
             }
-            else
-            {
+
             additionalInformationToUpdate.InformationType = additionalInformation.InformationType ?? string.Empty;
             additionalInformationToUpdate.InformationValue = additionalInformation.InformationValue ?? string.Empty;
-            }
+
             _context.SaveChanges();
         }
 
