@@ -62,8 +62,19 @@ namespace UsersNotebook.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult User(UserViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                      .Select(e => e.ErrorMessage)
+                                      .ToList();
+
+                // Możesz wykorzystać listę błędów do dalszej analizy lub logowania
+                foreach (var error in errors)
+                {
+                    // Wyświetl błąd w konsoli lub zapisz go do logów
+                    Console.WriteLine(error);
+                }
+
                 var vm = new UserViewModel
                 {
                     User = model.User,
@@ -82,17 +93,6 @@ namespace UsersNotebook.Controllers
                 _userRepository.UpdateInformation(model.AdditionalInformation);
                 _userRepository.Update(model.User);
             }
-                
-
-            /*if (model.AdditionalInformations != null)
-            {
-                foreach (var additionalInfo in model.AdditionalInformations)
-                {
-                    additionalInfo.UserId = model.User.Id;
-                    _userRepository.AddInformation(additionalInfo);
-                }
-            }*/
-
 
             return RedirectToAction("Users");
         }

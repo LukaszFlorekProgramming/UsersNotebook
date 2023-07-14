@@ -47,15 +47,31 @@
 
     @if (Model.Heading == "Edytowanie urzytkownika")
     {
+        <label class="col-form-label h5 font-weight-bold">Dodatkowa Informacja</label>
         <div class="form-group mb-2">
+            @Html.LabelFor(x => Model.AdditionalInformation.InformationType)
+            @Html.TextBoxFor(x => Model.AdditionalInformation.InformationType, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.AdditionalInformation.InformationType)
+        </div>
+        <div class="form-group mb-2">
+            @Html.LabelFor(x => Model.AdditionalInformation.InformationValue)
+            @Html.TextBoxFor(x => Model.AdditionalInformation.InformationValue, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.AdditionalInformation.InformationValue)
+        </div>
+
+
+        @*<div class="form-group mb-2">
             <label class="col-form-label h5 font-weight-bold">Dodatkowa Informacja</label>
             <div class="mt-2">
                 @Html.LabelFor(x => Model.AdditionalInformation.InformationType)
-                <div>@Html.TextBoxFor(x => Model.AdditionalInformation.InformationType, new { @class = "form-control" })</div>
+                @Html.TextBoxFor(x => Model.AdditionalInformation.InformationType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.AdditionalInformation.InformationType)
                 @Html.LabelFor(x => Model.AdditionalInformation.InformationValue)
-                <div>@Html.TextBoxFor(x => Model.AdditionalInformation.InformationValue, new { @class = "form-control" })</div>
+                @Html.TextBoxFor(x => Model.AdditionalInformation.InformationValue, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.AdditionalInformation.InformationValue)
+
             </div>
-       </div>
+       </div>*@
     }
 
    
