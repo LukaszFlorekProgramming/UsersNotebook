@@ -32,6 +32,10 @@
     Gereruj raport CSV
 </button>
 
+<button class="btn btn-secondary mb-3" onclick="generateExcel()">
+    Gereruj raport Excel
+</button>
+
 <div>
     @await Html.PartialAsync("_UsersReportTable", Model.Users)
 </div>
@@ -75,6 +79,37 @@
                 data: data,
                 success: function (data) {
                     var downloadUrl = "@Url.Action("DownloadCsv", "Report")" +
+                        "?name=" + encodeURIComponent(name) +
+                        "&surname=" + encodeURIComponent(surname) +
+                        "&gender=" + encodeURIComponent(gender);
+                    window.location.href = downloadUrl;
+                },
+                error: function (data) {
+                    alert(data.message)
+                },
+                dataType: "html"
+            });
+        }
+    </script>
+    <script>
+        function generateExcel() {
+
+            var name = $('input[name="Name"]').val();
+            var surname = $('input[name="Surname"]').val();
+            var gender = $('select[name="Gender"]').val();
+
+            var data = {
+                Name: name,
+                Surname: surname,
+                Gender: gender
+            };
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DownloadExcel","Report")",
+                data: data,
+                success: function (data) {
+                    var downloadUrl = "@Url.Action("DownloadExcel", "Report")" +
                         "?name=" + encodeURIComponent(name) +
                         "&surname=" + encodeURIComponent(surname) +
                         "&gender=" + encodeURIComponent(gender);
