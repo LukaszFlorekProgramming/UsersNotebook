@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UsersNotebook.Core.Models;
 using UsersNotebook.Core.Models.Domains;
 
 namespace UsersNotebook.Persistence.Repositories
@@ -78,22 +79,22 @@ namespace UsersNotebook.Persistence.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> Get(string name, string surname, string gender)
+        public IEnumerable<User> Get(FilterUsers filter)
         {
             var users = _context.Users.AsEnumerable(); ;
 
-            if(!string.IsNullOrWhiteSpace(name))
+            if(!string.IsNullOrWhiteSpace(filter.Name))
             {
-                users = users.Where(x => x.Name.Contains(name));
+                users = users.Where(x => x.Name.Contains(filter.Name));
             }
 
-            if (!string.IsNullOrWhiteSpace(surname))
+            if (!string.IsNullOrWhiteSpace(filter.Surname))
             {
-                users = users.Where(x => x.Surname.Contains(surname));
+                users = users.Where(x => x.Surname.Contains(filter.Surname));
             }
-            if (!string.IsNullOrWhiteSpace(gender))
+            if (!string.IsNullOrWhiteSpace(filter.Gender))
             {
-                users = users.Where(x => x.Gender.Contains(gender));
+                users = users.Where(x => x.Gender.Contains(filter.Gender));
             }
 
             return users.ToList();

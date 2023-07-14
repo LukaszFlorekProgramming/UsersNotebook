@@ -29,18 +29,16 @@ namespace UsersNotebook.Controllers
         }
 
         [HttpPost]
-        public IActionResult UsersReport(FilterUsers viewModel)
+        public IActionResult UsersReport(FilterUsers filter)
         {
-            var users = _userRepository.Get(viewModel.Name,
-                viewModel.Surname,viewModel.Gender);
+            var users = _userRepository.Get(filter);
 
             return PartialView("_UsersReportTable", users);
         }
         [HttpGet]
-        public IActionResult DownloadCsv(string name, string surname, string gender)
+        public IActionResult DownloadCsv(FilterUsers filter)
         {
-            var users = _userRepository.Get(name,
-                surname, gender);
+            var users = _userRepository.Get(filter);
             var csvData = new StringBuilder();
             csvData.AppendLine("Tytuł;Imie;Nazwisko;Data urodzenia;Ilosc lat;Płeć");
             string title;
