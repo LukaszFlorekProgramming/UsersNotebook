@@ -44,7 +44,8 @@
                             }
                             else
                             {
-                                <td colspan="1"></td>
+                                <td></td>
+                                <td></td>
                             }
 
                         }
@@ -53,15 +54,6 @@
                             <a href="@Url.Action("User", "User", new { id = 0 })" class="btn btn-primary">Dodaj</a>
                         </td>
                     </tr>
-
-                    @*if (Model.AdditionalInformations != null && Model.AdditionalInformations.Any())
-                    {
-                        var userAdditionalInformations = Model.AdditionalInformations.Where(info => info.UserId == user.Id);
-                        foreach (var info in userAdditionalInformations)
-                        {
-                                <td colspan="1">InformationType: @info.InformationType, InformationValue: @info.InformationValue</td>
-                        }
-                    }*@
                 }
             }
             else

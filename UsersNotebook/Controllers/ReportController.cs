@@ -21,7 +21,7 @@ namespace UsersNotebook.Controllers
         {
             var vm = new UsersReportViewModel
             {
-                FilterUsers = new Core.Models.FilterUsers(),
+                FilterUsers = new FilterUsers(),
                 Users = _userRepository.GetAll()
             };
 

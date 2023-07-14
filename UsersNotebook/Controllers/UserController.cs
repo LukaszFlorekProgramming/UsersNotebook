@@ -20,11 +20,6 @@ namespace UsersNotebook.Controllers
             var users = _userRepository.GetAll().ToList(); ;
             var additionalInformations = _userRepository.GetAdditionalInformation().ToList();
 
-            foreach (var user in users)
-            {
-                user.AdditionalInformations = new List<AdditionalInformation>();
-            }
-
             var vm = new UsersViewModel
             {
                 Users = users,
@@ -75,7 +70,6 @@ namespace UsersNotebook.Controllers
             {
                 _userRepository.Add(model.User);
             }
-
             else
             {
                 model.AdditionalInformation.UserId = model.User.Id;
