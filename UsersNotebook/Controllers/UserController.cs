@@ -78,18 +78,18 @@ namespace UsersNotebook.Controllers
             }
                 
             else
-                //model.AdditionalInformations.UserId = model.User.Id;
-                //_userRepository.AddInformation(model.AdditionalInformations);
+                model.AdditionalInformation.UserId = model.User.Id;
+                _userRepository.AddInformation(model.AdditionalInformation);
                 _userRepository.Update(model.User);
 
-            if (model.AdditionalInformations != null)
+            /*if (model.AdditionalInformations != null)
             {
                 foreach (var additionalInfo in model.AdditionalInformations)
                 {
                     additionalInfo.UserId = model.User.Id;
                     _userRepository.AddInformation(additionalInfo);
                 }
-            }
+            }*/
 
 
             return RedirectToAction("Users");
