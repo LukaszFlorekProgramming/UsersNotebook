@@ -27,6 +27,12 @@ namespace UsersNotebook.Persistence.Repositories
             return user;
         }
 
+        public AdditionalInformation GetAdditionalInformationsByUserId(int id)
+        {
+            var information = _context.AdditionalInformations.FirstOrDefault(u => u.UserId == id);
+            return information;
+        }
+
         public void Add(User user)
         {
             _context.Users.Add(user);
@@ -48,6 +54,27 @@ namespace UsersNotebook.Persistence.Repositories
             userToUpdate.DateOfBirth = user.DateOfBirth;
             userToUpdate.Gender = user.Gender;
 
+            _context.SaveChanges();
+        }
+
+        public void UpdateInformation(AdditionalInformation additionalInformation)
+        {
+            
+            var additionalInformationToUpdate = _context.AdditionalInformations.FirstOrDefault(x => x.UserId == additionalInformation.UserId);
+
+            if(additionalInformationToUpdate is null)
+            {
+                additionalInformationToUpdate = new AdditionalInformation();
+                additionalInformationToUpdate.InformationType = additionalInformation.InformationType;
+                additionalInformationToUpdate.InformationValue = additionalInformation.InformationValue;
+                additionalInformationToUpdate.UserId = additionalInformation.UserId;
+                _context.Add(additionalInformationToUpdate);
+            }
+            else
+            {
+            additionalInformationToUpdate.InformationType = additionalInformation.InformationType ?? string.Empty;
+            additionalInformationToUpdate.InformationValue = additionalInformation.InformationValue ?? string.Empty;
+            }
             _context.SaveChanges();
         }
 
